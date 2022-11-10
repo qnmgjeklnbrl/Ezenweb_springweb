@@ -1,4 +1,4 @@
-alert("asd")
+
  function getMapping1() {
             $.ajax({
                 url: '/api/v1/get-api/hello',
