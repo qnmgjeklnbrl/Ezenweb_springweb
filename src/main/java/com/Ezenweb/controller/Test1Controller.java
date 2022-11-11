@@ -15,7 +15,7 @@ public class Test1Controller {
     }*/
     @GetMapping("")
     public Resource gettext() {
-        return new ClassPathResource("test1.html") ;
+        return new ClassPathResource("templates/test1.html") ;
     }
     //반환타입:문자열
     //반환타입: HTML
