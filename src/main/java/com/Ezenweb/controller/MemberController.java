@@ -7,6 +7,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController //해당 클래스가 RestController 임을 명시
 @RequestMapping("/member")
 public class MemberController {
@@ -81,4 +83,18 @@ public class MemberController {
 
 
     }
+
+    @GetMapping("/list") //회원 목록
+    public List<MemberDto> list(){
+       List<MemberDto> list = memberService.list();
+
+       return list;
+
+    }
+    @GetMapping("/getauth")
+    public String getauth(@RequestParam("toemail") String toemail ) {
+        return memberService.getauth(toemail);
+    }
+
+
 }

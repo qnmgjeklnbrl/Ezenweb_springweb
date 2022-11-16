@@ -70,3 +70,25 @@ function logout(){
 
 }
 
+list()
+function list(){
+    $.ajax({
+        url:"/member/list",
+        success: function(re){
+           let html = ''
+           re.forEach( (m) => {
+                html += `<tr>
+                            <td>${m.mno}</td>
+                            <td>${m.memail}</td>
+                            <td>${m.mpassword}</td>
+                        </tr>`
+
+           })
+            document.querySelector(".mtable").innerHTML += html
+        }
+
+    })
+s
+
+
+}

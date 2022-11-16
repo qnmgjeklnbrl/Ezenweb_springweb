@@ -4,17 +4,23 @@ import com.Ezenweb.domain.dto.MemberDto;
 import com.Ezenweb.domain.entity.MemberEntity;
 import com.Ezenweb.domain.entity.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 
 @Service //해당 클래스가 Service 임을 명시
 public class MemberService {
-
+    @Autowired
+    JavaMailSender javaMailSender;
     @Autowired
     private MemberRepository memberRepository;
 
@@ -121,9 +127,56 @@ public class MemberService {
 
     public void logout(){
 
-        request.getSession().removeAttribute("loginMno");
-        request.getSession().invalidate();
+        request.getSession().setAttribute("loginMno" , null);
+
 
     }
+
+    public List<MemberDto> list (){
+
+        List<MemberEntity> list = memberRepository.findAll();
+        List<MemberDto> dtolist = new ArrayList<>();
+
+        for(MemberEntity entity: list){
+            dtolist.add(entity.toDto());
+
+        }
+        return dtolist;
+    }
+
+    //9. 메일 전송 서비스
+    public String getauth (String toemail){
+        String auth = "";
+        String html = "<html><body><h1> EzenWeb인증코드입니다.</h1>";
+        Random random = new Random();
+        for(int i=0;i<6;i++){
+            char ranchar = (char) (random.nextInt(26)+97);
+            // char ranchar2 = random.nextInt(10)+48;
+            auth += ranchar;
+
+        }
+
+        html += "<div>인증코드 : "+auth+"</div></body></html>";
+        memailsend(toemail, "ezenWeb 인증코드 입니다.", html);
+        return auth;
+
+
+    }
+    public void memailsend(String toemail, String title, String content){
+        try {
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
+            mimeMessageHelper.setFrom("rns0721@naver.com", "장군");
+            mimeMessageHelper.setTo(toemail);
+            mimeMessageHelper.setSubject(title);
+            mimeMessageHelper.setText(content.toString(), true);
+            javaMailSender.send(message);
+        }catch (Exception e){
+            System.out.println("mail보내기 오류"+e);
+        }
+    }
+
+
 
 }
