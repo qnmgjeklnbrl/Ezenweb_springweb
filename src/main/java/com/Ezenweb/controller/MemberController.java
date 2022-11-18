@@ -30,8 +30,7 @@ public class MemberController {
     public Resource getdelete(){ return new ClassPathResource("templates/member/delete.html");}
     @GetMapping("/update")
     public Resource getupdate(){ return new ClassPathResource("templates/member/update.html");}
-    @GetMapping("/index")
-    public Resource getindex(){ return new ClassPathResource("templates/member/index.html");}
+
 
     @Autowired
     private MemberService memberService;

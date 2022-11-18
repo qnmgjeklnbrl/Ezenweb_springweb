@@ -1,8 +1,8 @@
 package com.Ezenweb.service;
 
 import com.Ezenweb.domain.dto.MemberDto;
-import com.Ezenweb.domain.entity.MemberEntity;
-import com.Ezenweb.domain.entity.MemberRepository;
+import com.Ezenweb.domain.entity.member.MemberEntity;
+import com.Ezenweb.domain.entity.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
