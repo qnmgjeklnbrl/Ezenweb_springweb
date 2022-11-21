@@ -164,7 +164,7 @@ public class BoardService {
 
 
         VcategoryEntity vcategoryEntity  = vcategoryRepository.findById(vcno).get();
-        List<VisitEntity> elist = vcategoryEntity.getVisitEntityList();
+        List<VisitEntity> elist= vcategoryEntity.getVisitEntityList();
 
 
         List<VisitDto> dlist = new ArrayList<>();
@@ -176,23 +176,3 @@ public class BoardService {
 
 }
 
-/*
-
-    List<BoardEntity> elist= null;
-        if(bcno == 0){
-                elist = boardRepository.findAll();
-                }
-                else{
-                BcategoryEntity bcategoryEntity  = bcategoryRepository.findById(bcno).get();
-                elist = bcategoryEntity.getBoardEntityList();
-                }
-
-                List<BoardDto> dlist = new ArrayList<>();
-        for(BoardEntity entity : elist){
-        dlist.add(entity.toDto());
-        }
-        return dlist;
-
-
-
-*/
