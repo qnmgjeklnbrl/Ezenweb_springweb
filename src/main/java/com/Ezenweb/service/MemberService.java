@@ -24,8 +24,20 @@ public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
 
+
     @Autowired // 스프링 컨테이너 [ 메모리 ] 위임
     private HttpServletRequest request ;            // 요청 객체
+    public  MemberEntity getEntity(){
+
+        Object object = request.getSession().getAttribute("loginMno");
+        if( object == null ){return null;}
+        int mno = (Integer)object;
+        Optional<MemberEntity> optional = memberRepository.findById(mno);
+        if( !optional.isPresent() ){ return null;}
+        return optional.get();
+
+
+    }
     public int setmember(MemberDto memberDto){
 
        MemberEntity entity =  memberRepository.save(memberDto.toEntity());

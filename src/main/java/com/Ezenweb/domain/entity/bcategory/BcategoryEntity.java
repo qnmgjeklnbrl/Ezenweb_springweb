@@ -1,5 +1,6 @@
 package com.Ezenweb.domain.entity.bcategory;
 
+import com.Ezenweb.domain.dto.BcategoryDto;
 import com.Ezenweb.domain.entity.BaseEntity;
 import com.Ezenweb.domain.entity.board.BoardEntity;
 import lombok.*;
@@ -21,5 +22,16 @@ public class BcategoryEntity extends BaseEntity {
     @OneToMany(mappedBy = "bcategoryEntity") //1:n 일때 pk에 해당 어노테이션
     @Builder.Default
     private List<BoardEntity> boardEntityList = new ArrayList<>();
+
+    public BcategoryDto toDto(){
+        return BcategoryDto.builder()
+               .bcno(bcno)
+               .bcname(bcname)
+               .build();
+
+    }
+
+
+
 
 }

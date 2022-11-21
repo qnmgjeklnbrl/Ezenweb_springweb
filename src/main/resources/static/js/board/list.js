@@ -1,7 +1,7 @@
-
+let bcno = 0 ;
 getboards();
 
-
+bcategorylist();
 function getboards() {
     let boardlist = document.querySelector(".boardlist");
     let html = `<tr>
@@ -13,6 +13,7 @@ function getboards() {
                 </tr>`
     $.ajax({
         url: "/board/boardlist",
+        data:{"bcno":bcno},
         success: function(re){
             for (let i = 0; i < re.length; i++){
               html+=`<tr>
@@ -28,3 +29,31 @@ function getboards() {
 
     })
 }
+
+function bcategorylist(){
+    $.ajax({
+        url:"/board/bcategorylist",
+        type : "GET",
+        success: function(re){
+            let html = `<button type="button" class="cbtn" onclick="bcnochange(0)">전체보기</button>`;
+            re.forEach( c =>{
+                html += `<button type="button" class="cbtn" onclick="bcnochange(${c.bcno})">${c.bcname}</button>`;
+            })
+            document.querySelector(".bcategorybox").innerHTML = html;
+            cbtn = document.querySelectorAll(".cbtn") //위에서 생성된 카테고리 버튼들을  호출
+        }
+
+    })
+
+}
+
+
+function bcnochange( cno ){
+     bcno = cno;
+     alert(bcno+"번 카테고리 선택");
+     getboards();
+ }
+
+
+
+

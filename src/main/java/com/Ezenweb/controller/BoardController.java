@@ -1,6 +1,9 @@
 package com.Ezenweb.controller;
 
+import com.Ezenweb.domain.dto.BcategoryDto;
 import com.Ezenweb.domain.dto.BoardDto;
+import com.Ezenweb.domain.dto.VcategoryDto;
+import com.Ezenweb.domain.dto.VisitDto;
 import com.Ezenweb.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -36,6 +39,8 @@ public class BoardController {
     // 4. 게시물수정 페이지 열기
     @GetMapping("/update")// URL  : localhost:8080/board/update 요청시 해당 html 반환
     public Resource getupdate(){ return new ClassPathResource("templates/board/update.html"); }
+    @GetMapping("/visit")
+    public Resource getvisit(){ return new ClassPathResource("templates/board/visit.html");}
 
     // ----------- 3.요청과응답 처리 [model] --------------//
     // 1. HTTP 요청 메소드 매핑 : @PostMapping @GetMapping @DeleteMapping @PutMapping
@@ -47,8 +52,8 @@ public class BoardController {
     }
     // 2. 게시물 목록 조회 [ 페이징,검색 ]
     @GetMapping("/boardlist")
-    public List<BoardDto> boardlist(){
-        return boardService.boardlist();
+    public List<BoardDto> boardlist(@RequestParam("bcno") int bcno ){
+        return boardService.boardlist(bcno);
     }
     // 3. 게시물 개별 조회
     @GetMapping("/getboard")
@@ -65,6 +70,45 @@ public class BoardController {
     @PutMapping("/upboard")
     public boolean upboard( @RequestBody BoardDto boardDto){
         return boardService.upboard( boardDto );
+    }
+
+    //6. 카테고리 등록
+    @PostMapping("/setbcategory")
+    public boolean setbcategory( @RequestBody BcategoryDto bcategoryDto ){
+
+
+
+        return boardService.serbcategory(bcategoryDto);
+
+    }
+    //7.모든 카테고리 출력
+    @GetMapping("/bcategorylist")
+    public List<BcategoryDto>  bcategorylist(){
+        return boardService.bcategorylist();
+    }
+
+
+    @GetMapping("/setvcategory")
+    public boolean setvcategory( @RequestParam("vcname") String vcname){
+
+
+      return boardService.setvcategory(vcname);
+
+    }
+    @GetMapping("/getvcategory")
+    public List<VcategoryDto> getvcategory(){
+
+
+        return boardService.getvcategory();
+    }
+    @PostMapping("/setvisit")
+    public boolean setvisit(@RequestBody VisitDto visitDto){
+
+        return boardService.setvisit(visitDto);
+    }
+    @GetMapping("/visitlist")
+    public List<VisitDto> visitlist(@RequestParam("vcno") int vcno){
+        return boardService.visitlist(vcno);
     }
 
 }
