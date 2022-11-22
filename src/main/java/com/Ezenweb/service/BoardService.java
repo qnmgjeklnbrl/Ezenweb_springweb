@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -173,6 +174,39 @@ public class BoardService {
         }
         return dlist;
    }
+
+   @Transactional
+   public VisitDto viewvisit(int vno){
+
+        VisitEntity visitEntity = visitRepository.findById(vno).get();
+        return visitEntity.toDto();
+
+   }
+   @Transactional
+    public boolean vdelete(int vno){
+        Optional <VisitEntity> optional = visitRepository.findById(vno);
+        if( optional.isPresent() ){
+            visitRepository.delete(optional.get());
+            return true;
+        }else{return false;}
+
+
+    }
+    @Transactional
+    public boolean vput(VisitDto visitDto){
+        Optional <VisitEntity> optional = visitRepository.findById(visitDto.getVno());
+        if( optional.isPresent() ){
+            VisitEntity entity = optional.get();
+            entity.setVtitle(visitDto.getVtitle());
+            entity.setVcontent(visitDto.getVcontent());
+
+            return true;
+        }else{ return false; }
+
+
+
+
+    }
 
 }
 

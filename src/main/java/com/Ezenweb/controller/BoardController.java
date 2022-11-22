@@ -110,6 +110,27 @@ public class BoardController {
     public List<VisitDto> visitlist(@RequestParam("vcno") int vcno){
         return boardService.visitlist(vcno);
     }
+    @GetMapping("/viewvisit")
+    public VisitDto viewvisit(@RequestParam("vno") int vno){
+
+
+
+        return boardService.viewvisit(vno);
+
+    }
+    @DeleteMapping("/vdelete")
+    public boolean vdelete(@RequestParam("vno") int vno){
+
+        return boardService.vdelete(vno);
+
+    }
+    @PutMapping("/vput")
+    public boolean vput(@RequestBody VisitDto visitDto){
+
+        return boardService.vput(visitDto);
+
+
+    }
 
 }
 
