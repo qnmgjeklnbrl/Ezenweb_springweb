@@ -46,8 +46,13 @@ public class BoardController {
     // 1. HTTP 요청 메소드 매핑 : @PostMapping @GetMapping @DeleteMapping @PutMapping
     // 2. HTTP 데이터 요청 메소드 매핑 : @RequestBody @RequestParam @PathVariable
     // 1. 게시물 쓰기 [ 첨부파일 ]
+   // @PostMapping("/setboard") 첨부파일 없을때
+   // public boolean setboard( @RequestBody BoardDto boardDto ){
+       // return boardService.setboard( boardDto);
+   // }
     @PostMapping("/setboard")
-    public boolean setboard( @RequestBody BoardDto boardDto ){
+    public boolean setboard(  BoardDto boardDto ){
+        System.out.println(boardDto.toString());
         return boardService.setboard( boardDto);
     }
     // 2. 게시물 목록 조회 [ 페이징,검색 ]
@@ -130,6 +135,10 @@ public class BoardController {
         return boardService.vput(visitDto);
 
 
+    }
+    @GetMapping("/filedownload")
+    public void filedownload( @RequestParam("filename") String filename ){
+        boardService.filedownload( filename );
     }
 
 }

@@ -1,18 +1,17 @@
 let bcno = 2;//카테고리  번호 전역변수
 function setboard(){
-    let data={
-       btitle:document.querySelector(".btitle").value,
-       bcontent:document.querySelector(".bcontent").value,
-       bfile:document.querySelector(".bfile").value,
-       bcno: bcno
-    }
+    let boardform = document.querySelector(".boardform")
+    let formdata = new FormData(boardform)
+    formdata.set("bcno",bcno)
     $.ajax({
         url: "/board/setboard",
         type: "POST",
-        data: JSON.stringify(data),
-        contentType:'application/json',
+        data: formdata,
+        contentType:false,
+        processData: false,
          success: function(re){
-            location.href="/board/list"
+            console.log(re)
+
          },
 
     })
