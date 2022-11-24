@@ -83,7 +83,7 @@ public class MemberController {
 
     }
 
-    @GetMapping("/list") //회원 목록
+    @GetMapping("/list") //회원 목록123
     public List<MemberDto> list(){
        List<MemberDto> list = memberService.list();
 
