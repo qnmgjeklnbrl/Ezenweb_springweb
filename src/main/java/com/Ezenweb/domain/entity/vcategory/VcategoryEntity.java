@@ -1,7 +1,7 @@
 package com.Ezenweb.domain.entity.vcategory;
 
 import com.Ezenweb.domain.dto.VcategoryDto;
-import com.Ezenweb.domain.entity.board.BoardEntity;
+
 import com.Ezenweb.domain.entity.visit.VisitEntity;
 import lombok.*;
 

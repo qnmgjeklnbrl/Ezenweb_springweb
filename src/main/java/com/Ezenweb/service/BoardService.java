@@ -10,7 +10,7 @@ import com.Ezenweb.domain.entity.bcategory.BcategoryRepository;
 import com.Ezenweb.domain.entity.board.BoardEntity;
 import com.Ezenweb.domain.entity.board.BoardRepository;
 import com.Ezenweb.domain.entity.member.MemberEntity;
-import com.Ezenweb.domain.entity.member.MemberRepository;
+
 import com.Ezenweb.domain.entity.vcategory.VcategoryEntity;
 import com.Ezenweb.domain.entity.vcategory.VcategoryRepository;
 import com.Ezenweb.domain.entity.visit.VisitEntity;
@@ -18,10 +18,10 @@ import com.Ezenweb.domain.entity.visit.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
+
+
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Consumer;
+
 
 @Service
 public class BoardService {
@@ -39,12 +39,10 @@ public class BoardService {
     private BoardRepository boardRepository;
     @Autowired
     private BcategoryRepository bcategoryRepository;
-    @Autowired
-    private HttpServletRequest request;
+  
     @Autowired
     private HttpServletResponse response;
-    @Autowired
-    private MemberRepository memberRepository;
+   
     @Autowired
     private MemberService memberService;
     @Autowired
@@ -54,6 +52,7 @@ public class BoardService {
     // ------------ 2. 서비스 ------------- //
     //0. 첨부파일 다운로드
     public void filedownload( String filename ){
+        
         String realfilename ="";  // uuid 제거  //
         String [] split = filename.split("_"); // 1. _ 기준으로 자르기
         for( int i = 1 ; i<split.length ; i++ ) { // 2. uuid 제외한 반복문 돌리기
@@ -62,21 +61,43 @@ public class BoardService {
                 realfilename += "_";        // 문자열[1] _ 문자열[2] _ 문자열[3].확장자명
             }
         }
+        System.out.println("test1");
         String filepath = path+filename; // 1. 경로 찾기
-        try {  // 2. 헤더 구성 [ HTTP 해서 지원하는 다운로드형식 메소드 [ response ]
+        try {
+            System.out.println("test2");  // 2. 헤더 구성 [ HTTP 해서 지원하는 다운로드형식 메소드 [ response ]
             response.setHeader( // 응답
                     "Content-Disposition", // 다운로드 형식 [ 브라우저 마다 다름 ]
                     "attachment;filename=" + URLEncoder.encode(realfilename, "UTF-8")); // 다운로드에 표시될 파일명
             File file = new File(filepath); // 해당 경로의 파일 객체화
-            // 3. 다운로드 스트림 [ ]
+        // 3. 다운로드 스트림 [ ]
+            System.out.println("test3");
             BufferedInputStream fin = new BufferedInputStream( new FileInputStream(file)  ); // 1. 입력 스트림 객체 선언
             byte[] bytes = new byte[ (int)file.length() ];  // 2. 파일의 길이만큼 배열 선언
             fin.read( bytes );      // * 스트림 읽기 [ 대상 : new FileInputStream(file) ] // 3. 파일의 길이만큼 읽어와서 바이트를 배열에 저장
             BufferedOutputStream fout = new BufferedOutputStream( response.getOutputStream() ); // 4. 출력 스트림 객체 선언
             fout.write( bytes );    // * 스트림 내보내기   [ response.getOutputStream() ]  // 5. 응답하기 [ 배열 내보내기]
             fout.flush(); fout.close(); fin.close();  // 6. 버퍼 초기화 혹은 스트림 닫기
-
+            System.out.println("test4");
         }catch(Exception e){ System.out.println(e);  }
+    }
+
+    public boolean fileupload(BoardDto boardDto, BoardEntity boardEntity){
+        if(boardDto.getBfile() != null){
+            //첨부파일 등록
+            
+            String uuid = UUID.randomUUID().toString();
+            String filename = uuid + "_" + boardDto.getBfile().getOriginalFilename(); // 2. 난수+파일명
+            boardEntity.setBfile(filename);
+            //업로드
+
+            try {
+                boardDto.getBfile().transferTo( new File(path+filename));
+            } catch (IOException e) {
+                throw new RuntimeException(e+"첨부파일 업로드 실패");
+            }
+
+            return true;
+        }else{return false;}
 
 
     }
@@ -94,23 +115,8 @@ public class BoardService {
 
        BoardEntity boardEntity =  boardRepository.save( boardDto.toEntity() );
        if(boardEntity.getBno() != 0){
-            if(boardDto.getBfile() != null){
-                //첨부파일 등록
-                String filename =boardDto.getBfile().getOriginalFilename();
-                String uuid = UUID.randomUUID().toString();
-                filename+=uuid;
-                boardEntity.setBfile(filename);
-                //업로드
-
-                try {
-                    boardDto.getBfile().transferTo( new File(path+filename));
-                } catch (IOException e) {
-                    throw new RuntimeException(e+"첨부파일 업로드 실패");
-                }
-
-
-            }
-
+        
+            fileupload(boardDto,boardEntity);
 
            boardEntity.setMemberEntity(memberEntity);
            memberEntity.getBoardEntityList().add(boardEntity);
@@ -159,7 +165,20 @@ public class BoardService {
     public boolean upboard( BoardDto boardDto){
         Optional <BoardEntity> optional = boardRepository.findById(boardDto.getBno());
         if( optional.isPresent() ){
+            //1.수정 할 첨부파일이 있을때
             BoardEntity entity = optional.get();
+                if(boardDto.getBfile()!=null){
+                    File file =  new File(path+entity.getBfile()) ;
+                    if(file.exists()){
+                        file.delete();
+                    }
+                    entity.setBfile(null);
+
+                }else{ //수정 할 첨부파일이 없을때
+                    fileupload(boardDto, entity);
+                }
+                
+
             entity.setBtitle(boardDto.getBtitle());
             entity.setBcontent(boardDto.getBcontent());
 

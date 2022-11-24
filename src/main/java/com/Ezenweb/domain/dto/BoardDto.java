@@ -4,7 +4,7 @@ import com.Ezenweb.domain.entity.board.BoardEntity;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.Multipart;
+
 
 
 @AllArgsConstructor @NoArgsConstructor
@@ -23,6 +23,8 @@ public class BoardDto {
 
     private int bview;
 
+    private String bfilename;
+    
     private MultipartFile bfile;
     private String memail;
     public BoardEntity toEntity(){

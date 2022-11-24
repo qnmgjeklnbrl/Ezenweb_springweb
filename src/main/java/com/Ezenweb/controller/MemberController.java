@@ -8,7 +8,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController //해당 클래스가 RestController 임을 명시
 @RequestMapping("/member")
 public class MemberController {

@@ -1,4 +1,4 @@
-
+                     
 let urlstr = window.location.href;
 let url = new URL(urlstr);
 let bno = url.searchParams.get("bno");
@@ -6,6 +6,8 @@ $.ajax({
     url:"/board/getboard",
     data:{"bno":bno},
     success: function(re){
+        console.log(typeof(re.bfilename));
+        
         let html=`<tr>
                       <th>글 번호</th>
                       <th>작성자 번호</th>
@@ -18,7 +20,7 @@ $.ajax({
                    <td>${re.memail}</td>
                    <td>${re.btitle}</td>
                    <td>${re.bcontent}</td>
-                   <td>${re.bfile}</td>
+                   <td ><a href="/board/filedownload?filename=${re.bfilename}">${re.bfilename}</a</td>
                  </tr>
                  `;
         document.querySelector(".view").innerHTML=html;
@@ -29,7 +31,7 @@ function delboard(){
         url:"/board/delboard",
         type:"DELETE",
         data:{"bno": bno},
-        success:function(re){
+        success:function(){
             location.href="/board/list"
         }
     })
@@ -40,6 +42,5 @@ function update(){
 function tolist(){
     location.href="/board/list"
 }
-
 
 

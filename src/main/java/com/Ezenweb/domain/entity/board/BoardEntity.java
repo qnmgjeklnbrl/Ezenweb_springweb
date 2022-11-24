@@ -45,7 +45,7 @@ public class BoardEntity extends BaseEntity {
                 .bno(this.bno)
                 .btitle(this.btitle)
                 .bcontent(this.bcontent)
-
+                .bfilename(this.bfile)
                 .bview(this.bview)
                 .memail(this.memberEntity.getMemail())
                 .build();

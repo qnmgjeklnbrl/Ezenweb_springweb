@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Library from './chapter3/Library';
 
+// DOM 컨테이너 [piblic -> index.html 안에 있는 태그]
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Library />
   </React.StrictMode>
 );
 
