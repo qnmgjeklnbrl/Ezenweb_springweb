@@ -12,7 +12,7 @@ function login(){
                data: JSON.stringify(info),
                contentType:"application/json",
                success:function(re){
-                    console.log(re);
+                  
                   if(re=="1"){
                     location.href="/"
                   }else if(re=="2"){

@@ -10,7 +10,7 @@ function setboard(){
         contentType:false,
         processData: false,
          success: function(re){
-            console.log(re)
+           
 
          },
 

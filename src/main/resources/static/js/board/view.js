@@ -6,7 +6,7 @@ $.ajax({
     url:"/board/getboard",
     data:{"bno":bno},
     success: function(re){
-        console.log(typeof(re.bfilename));
+        
         
         let html=`<tr>
                       <th>글 번호</th>
