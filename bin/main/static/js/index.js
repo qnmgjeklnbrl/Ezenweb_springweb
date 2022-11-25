@@ -8,7 +8,7 @@
 $.ajax({
     url:"/member/getmno",
     success: function(re){
-        console.log(re)
+       
         if(re!==0){
             document.querySelector(".container").innerHTML+=`<button type="button" onclick="logout()"> 로그아웃 </button>
                                                          <button type="button" onclick="findpasswordPage()"> 비밀번호 찾기 </button>
@@ -50,7 +50,7 @@ function updatePage(){
 }
 
 function deletePage(){
-    console.log("loginPage")
+    
     location.href="/member/delete"
 
 

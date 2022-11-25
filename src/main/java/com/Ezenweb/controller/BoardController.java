@@ -52,7 +52,8 @@ public class BoardController {
    // }
     @PostMapping("/setboard")
     public boolean setboard(  BoardDto boardDto ){
-        System.out.println(boardDto.toString());
+        
+    
         return boardService.setboard( boardDto);
     }
     // 2. 게시물 목록 조회 [ 페이징,검색 ]
@@ -63,7 +64,7 @@ public class BoardController {
     // 3. 게시물 개별 조회
     @GetMapping("/getboard")
     public BoardDto getboard( @RequestParam("bno") int bno ){
-        System.out.println(bno+"asd");
+        
         return boardService.getboard( bno );
     }
     // 4. 게시물 삭제
@@ -138,7 +139,7 @@ public class BoardController {
     }
     @GetMapping("/filedownload")
     public void filedownload( @RequestParam("filename") String filename ){
-        System.out.println(filename);
+      
         boardService.filedownload( filename );
     }
 
