@@ -24,6 +24,9 @@ public class BoardDto {
     private int bview;
 
     private String bfilename;
+
+    private int startbtn;
+    private int endbtn;
     
     private MultipartFile bfile;
     private String memail;

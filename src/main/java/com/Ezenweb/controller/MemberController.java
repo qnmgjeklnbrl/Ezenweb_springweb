@@ -43,14 +43,14 @@ public class MemberController {
 
     }
 
-    @PostMapping("/getmember")
-    public int getmember(@RequestBody MemberDto memberDto){
+    // @PostMapping("/getmember")   [시큐리티 사용시 필요 없음]
+    // public int getmember(@RequestBody MemberDto memberDto){
 
-        int result = memberService.getmember(memberDto);
+    //     int result = memberService.getmember(memberDto);
 
-        return result;
+    //     return result;
 
-    }
+    // }
 
     @GetMapping("/getpassword")
     public String getpassword( @RequestParam("memail") String memail ){

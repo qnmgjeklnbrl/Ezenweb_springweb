@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "axios": "^1.2.0",
+    "jquery": "^3.6.1"
+  },
+  "name": "ezenweb_springweb",
+  "version": "1.0.0",
+  "description": "^c",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qnmgjeklnbrl/Ezenweb_springweb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qnmgjeklnbrl/Ezenweb_springweb/issues"
+  },
+  "homepage": "https://github.com/qnmgjeklnbrl/Ezenweb_springweb#readme"
+}

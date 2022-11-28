@@ -6,15 +6,6 @@
             "request": "launch",
             "mainClass": "com.Ezenweb.Webstart",
             "projectName": "Ezenweb"
-        },
-        {
-            "type": "chrome"
-        },
-        {
-            "type": "chrome",
-            "name": "http://localhost:8082/board/view?bno=2",
-            "request": "launch",
-            "url": "http://localhost:8082/board/view?bno=2"
         }
     ]
 }
