@@ -6,14 +6,15 @@
 </head>
 <body>
 
-  <h3> 로그인 </h3>
-  이메일:<input type="text" class="memail"><br>
-  비밀번호:<input type="text" class="mpassword"><br>
+  <h3>로그인</h3>
+  <form method="post" action="/member/getmember">
+      이메일 : <input type="text" name="memail"><br>
+      비밀번호 : <input type="password" name="mpassword"><br>
+      <input type="submit" value="로그인">
+  </form>
 
-  <button type="button" onclick="login()"> 로그인 </button>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="/js/member/login.js"> </script>
 
-
-  <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-  <script src="/js/member/login.js"></script>
 </body>
 </html>

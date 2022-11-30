@@ -32,6 +32,11 @@ public class MemberEntity extends BaseEntity {
     @Builder.Default
     private List<BoardEntity> boardEntityList = new ArrayList<>();
 
+
+
+    @Column
+    private String mrol;
+
     // 2. 생성자 [ 롬복으로 사용 ]
     // 3. 메소드 [ 롬복으로 사용 ]
     // * 엔티티 --> Dto

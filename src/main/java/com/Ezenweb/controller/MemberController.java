@@ -70,18 +70,18 @@ public class MemberController {
         return result;
     }
 
-    @GetMapping("/getmno")
-    public int getmno(  ){
-        int result = memberService.getmno( );
+    @GetMapping("/getloginMno") // 6. 로그인 정보 확인
+    public String getloginMno(){
+        String result = memberService.getloginMno();
         return result;
     }
 
-    @GetMapping("/logout")
-    public void logout(  ){
-        memberService.logout( );
+    // @GetMapping("/logout")
+    // public void logout(  ){
+    //     memberService.logout( );
 
 
-    }
+    // }
 
     @GetMapping("/list") //회원 목록123
     public List<MemberDto> list(){

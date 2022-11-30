@@ -5,70 +5,47 @@
     <button type="button"> 비밀번호 수정 </button>
     <button type="button"> 회원탈퇴  </button>
 */
-$.ajax({
-    url:"/member/getmno",
-    success: function(re){
-       
-        if(re!==0){
-            document.querySelector(".container").innerHTML+=`<button type="button" onclick="logout()"> 로그아웃 </button>
-                                                         <button type="button" onclick="findpasswordPage()"> 비밀번호 찾기 </button>
-                                                          <button type="button" onclick="updatePage()"> 비밀번호 수정 </button>
-                                                          <button type="button" onclick="deletePage()"> 회원탈퇴  </button>`
-        }
-    }
-
-
-})
-
-
-
-function signupPage(){
-
-    location.href="/member/signup"
-
-
-}
-function loginPage(){
-
-    location.href="/member/login"
-
-
-}
-
-
-function findpasswordPage(){
-
-    location.href="/member/findpassword"
-
-
-}
-function updatePage(){
-
-    location.href="/member/update"
-
-
-}
-
-function deletePage(){
-    
-    location.href="/member/delete"
-
-
-}
-
-function logout(){
+getloginMno();
+function getloginMno(){
     $.ajax({
+        url : "/member/getloginMno" ,
+        type : "get" ,
+        success : function(re) {
+            let headerbox = '';
+            if( re == "" ){ // 로그인 안했다 ..
+                headerbox +=
+                        '<a href="/member/signup"><button type="button"> 회원가입 </button></a>'+
+                        '<a href="/member/login"><button type="button"> 로그인 </button></a>'
+            }
+            else{  // 로그인 했다.. [ 회원번호가 0 이 아니면 ]
+                 headerbox +=
+                        '<a href="/member/logout"><button type="button"> 로그아웃 </button></a>'+
+                        '<a href="/member/findpassword"><button type="button"> 비밀번호찾기 </button></a>'+
+                        '<a href="/member/delete"><button type="button"> 비밀번호수정 </button></a>'+
+                        '<a href="/member/update"><button type="button"> 회원탈퇴 </button></a>'
+            }
+            document.querySelector(".headerbox").innerHTML = headerbox;
 
-         url:"/member/logout",
-         success: function(re){
-            location.href="/member/index"
-         }
-
-
+        }
     })
-
-
 }
+
+
+
+
+// function logout(){
+//     $.ajax({
+
+//          url:"/member/logout",
+//          success: function(re){
+//             location.href="/member/index"
+//          }
+
+
+//     })
+
+
+// }
 
 list()
 function list(){
