@@ -22,19 +22,17 @@ public class MemberEntity extends BaseEntity {
     @Column( nullable = false ) // not null
     private String memail;      // 회원이메일=회원아이디 필드
 
-    @Column( nullable = false ) // not null
+    @Column
     private String mpassword;   // 회원비밀번호 필드
 
-    @Column( nullable = false)  // not null
+    @Column
     private String mphone;      // 회원 전화번호 필드
 
-    @OneToMany(mappedBy = "memberEntity") //1:n 일때 pk에 해당 어노테이션
-    @Builder.Default
+    @OneToMany(mappedBy = "memberEntity" ) // [ 1:n] PK 에 해당 어노테이션   mappedBy="fk필드명"
+    @Builder.Default // 빌더 사용시 해당 필드의 초기값 설정
     private List<BoardEntity> boardEntityList = new ArrayList<>();
 
-
-
-    @Column
+    @Column // 회원 등급
     private String mrol;
 
     // 2. 생성자 [ 롬복으로 사용 ]

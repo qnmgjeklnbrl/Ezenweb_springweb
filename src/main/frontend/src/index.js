@@ -3,15 +3,24 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import CommentList from './chapter5/CommentList'
 
+import Index from './component/Index'
+import Signup from './component/member/Signup'
 
 // 1. 사용할 컴포넌트 호출 [ import 컴포넌트명 from 파일명 ]
-import Library from './chapter3/Library'
-import Clock from './chapter4/Clock'
-import Signup from './component/member/Signup';
+import Library from './book/chapter3/Library'
+import Clock from './book/chapter4/Clock'
+import CommentList from './book/chapter5/CommentList'
+
 // 2. Dom 컨테이너 [ public-> index.html 안에 있는 태그 ]
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// * 프로젝트
+    root.render(
+      <React.StrictMode>
+        <Index />
+      </React.StrictMode>
+    );
+
 
 // 3. Dom 컨테이너 렌더링
 // 1. 기본값 [ app.js 컴포넌트를 root 에 렌더링
@@ -39,23 +48,23 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 //      } , 1000 );
 
 // 4.
-root.render(
-  <React.StrictMode>
-    <CommentList />
-  </React.StrictMode>
-);
-
-// 4.
 //root.render(
-  //  <React.StrictMode>
-    //  <Signup />
-    //</React.StrictMode>
-  //);
-  
-  
-  
-  
-  // If you want to start measuring performance in your app, pass a function
-  // to log results (for example: reportWebVitals(console.log))
-  // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-  reportWebVitals();
+//  <React.StrictMode>
+//    <CommentList />
+//  </React.StrictMode>
+//);
+
+// 5.
+//root.render(
+//  <React.StrictMode>
+//    <Signup />
+//  </React.StrictMode>
+//);
+
+
+
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

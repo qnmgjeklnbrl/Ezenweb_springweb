@@ -1,6 +1,7 @@
 package com.Ezenweb.service;
 
 import com.Ezenweb.domain.dto.MemberDto;
+import com.Ezenweb.domain.dto.OauthDto;
 import com.Ezenweb.domain.entity.member.MemberEntity;
 import com.Ezenweb.domain.entity.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
@@ -23,7 +29,46 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 @Service //해당 클래스가 Service 임을 명시
-public class MemberService implements UserDetailsService {
+public class MemberService implements UserDetailsService ,OAuth2UserService<OAuth2UserRequest,OAuth2User>{
+
+    @Override // 로그인 성공한 소셜 회원 정보 받는 메소드
+    public OAuth2User loadUser( OAuth2UserRequest userRequest ) throws OAuth2AuthenticationException {
+        // userRequest 인증 결과 요청변수
+// 1. 인증[로그인] 결과 정보 요청
+OAuth2UserService oAuth2UserService = new DefaultOAuth2UserService();
+OAuth2User oAuth2User = oAuth2UserService.loadUser( userRequest ); // oAuth2User.getAttributes()
+// 2. oauth2 클라이언트 식별 [ 카카오 vs 네이버 vs 구글 ]
+String registrationId = userRequest.getClientRegistration().getRegistrationId();
+// 3. 회원정보 담긴 객체명 [ JSON 형태 ]
+String oauth2UserInfo = userRequest
+.getClientRegistration()
+.getProviderDetails()
+.getUserInfoEndpoint()
+.getUserNameAttributeName();
+// 4. Dto 처리
+OauthDto oauthDto = OauthDto.of( registrationId , oauth2UserInfo , oAuth2User.getAttributes() );
+
+// *. Db 처리
+// 1. 이메일로 엔티티 검색 [ 가입  or 기존회원 구분 ]
+Optional< MemberEntity > optional
+= memberRepository.findByMemail( oauthDto.getMemail() );
+
+MemberEntity memberEntity = null; //
+if( optional.isPresent() ) { // 기존회원이면 // Optional 클래스 [ null 예외처리 방지 ]
+memberEntity = optional.get();
+}else{ // 기존회원이 아니면 [ 가입 ]
+memberEntity = memberRepository.save( oauthDto.toEntity() );
+}
+// 권한부여
+Set<GrantedAuthority> authorities   = new HashSet<>();
+authorities.add( new SimpleGrantedAuthority( memberEntity.getMrol() ) );
+// 5. 반환 MemberDto[ 일반회원 vs oauth : 통합회원 - loginDto ]
+MemberDto memberDto = new MemberDto();
+memberDto.setMemail( memberEntity.getMemail() );
+memberDto.setAuthorities( authorities );
+memberDto.setAttributes( oauthDto.getAttributes() );
+return memberDto;
+}
     @Autowired
     JavaMailSender javaMailSender;
     @Autowired
@@ -31,20 +76,7 @@ public class MemberService implements UserDetailsService {
     @Autowired // 스프링 컨테이너 [ 메모리 ] 위임
     private HttpServletRequest request ;            // 요청 객체
 
-    @Override
-    public UserDetails loadUserByUsername(String memail ) throws UsernameNotFoundException {
-        // 1. 입력받은 아이디 [ memail ] 로 엔티티 찾기
-        MemberEntity memberEntity = memberRepository.findByMemail( memail )
-                .orElseThrow( ()-> new UsernameNotFoundException("사용자가 존재하지 않습니다,") ); // .orElseThrow : 검색 결과가 없으면 화살표함수[람다식]를 이용한
-        // 2. 검증된 토큰 생성
-        Set<GrantedAuthority>  authorities = new HashSet<>();
-        authorities.add( new SimpleGrantedAuthority("일반회원") ); // 토큰정보에 일반회원 내용 넣기
-        // 3.
-        MemberDto memberDto = memberEntity.toDto(); // 엔티티 --> Dto
-        memberDto.setAuthorities( authorities );       // dto --> 토큰 추가
-        return memberDto; // Dto 반환 [ MemberDto는 UserDetails 의 구현체 ]
-            // 구현체 : 해당 인터페이스의 추상메소드[선언만]를 구현해준 클래스의 객체
-    }
+
 
 
     public  MemberEntity getEntity(){
@@ -70,6 +102,24 @@ public class MemberService implements UserDetailsService {
         entity.setMrol("user");
          // 2. 결과 반환 [ 생성된 엔티티의 pk값 반환 ]
         return entity.getMno();
+    }
+
+    // 2. [ 시큐리티 사용시 ] 로그인 인증 메소드 재정의
+    @Override
+    public UserDetails loadUserByUsername(String memail ) throws UsernameNotFoundException {
+        // 1. 입력받은 아이디 [ memail ] 로 엔티티 찾기
+        MemberEntity memberEntity = memberRepository.findByMemail( memail )
+                .orElseThrow( ()-> new UsernameNotFoundException("사용자가 존재하지 않습니다,") ); // .orElseThrow : 검색 결과가 없으면 화살표함수[람다식]를 이용한
+        // 2. 검증된 토큰 생성
+        Set<GrantedAuthority>  authorities = new HashSet<>();
+        authorities.add(
+                new SimpleGrantedAuthority( memberEntity.getMrol() )
+        ); // 토큰정보에 일반회원 내용 넣기
+        // 3.
+        MemberDto memberDto = memberEntity.toDto(); // 엔티티 --> Dto
+        memberDto.setAuthorities( authorities );       // dto --> 토큰 추가
+        return memberDto; // Dto 반환 [ MemberDto는 UserDetails 의 구현체 ]
+        // 구현체 : 해당 인터페이스의 추상메소드[선언만]를 구현해준 클래스의 객체
     }
 
     // // 2. 로그인     [시큐리티 사용시 필요 없음]
