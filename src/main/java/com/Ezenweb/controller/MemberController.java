@@ -12,24 +12,24 @@ import java.util.List;
 @RestController //해당 클래스가 RestController 임을 명시
 @RequestMapping("/member")
 public class MemberController {
-    @GetMapping("/signup")
-    public Resource getsignup() {
-        return new ClassPathResource("templates/member/signup.html");
+   // @GetMapping("/signup")
+    // public Resource getsignup() {
+    //     return new ClassPathResource("templates/member/signup.html");
 
-    }
-    @GetMapping("/login")
-    public Resource getlogin() {
-        return new ClassPathResource("templates/member/login.html");
+    // }
+    // @GetMapping("/login")
+    // public Resource getlogin() {
+    //     return new ClassPathResource("templates/member/login.html");
 
-    }
-    @GetMapping("/findpassword")
-    public Resource findpassword(){
-        return new ClassPathResource("templates/member/findpassword.html");
-    }
-    @GetMapping("/delete")
-    public Resource getdelete(){ return new ClassPathResource("templates/member/delete.html");}
-    @GetMapping("/update")
-    public Resource getupdate(){ return new ClassPathResource("templates/member/update.html");}
+    // }
+    // @GetMapping("/findpassword")
+    // public Resource findpassword(){
+    //     return new ClassPathResource("templates/member/findpassword.html");
+    // }
+    // @GetMapping("/delete")
+    // public Resource getdelete(){ return new ClassPathResource("templates/member/delete.html");}
+    // @GetMapping("/update")
+    // public Resource getupdate(){ return new ClassPathResource("templates/member/update.html");}
 
 
     @Autowired

@@ -15,21 +15,25 @@
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import Home from './Home';
                
 import {BrowserRouter, Routes , Route ,Link} from 'react-router-dom';
 import Signup from './member/Signup';
+import Login from './member/Login';
+import BoardList from './board/BoardList';
   export default function Index( props ){
   return  (
             <div>
                      <BrowserRouter>
 
                          <Header/>
-                         <h3>메인페이지</h3>
+                         
                         
                         <Routes>
-                            <Route path='/'/>
-                             <Route path='/member/signup' element={<Signup/>}/>
-
+                            <Route path='/'element={<Home/>}/>
+                            <Route path='/member/signup' element={<Signup/>}/>
+                            <Route path='/member/login' element={<Login/>}/>
+                            <Route path='/board/list' element={<BoardList/>}/>
                         </Routes>
                         <Footer/>
                     </BrowserRouter>    

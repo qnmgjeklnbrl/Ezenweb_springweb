@@ -28,19 +28,19 @@ public class BoardController {
 
     // ------------2.페이지[html] 요청 로드 [view]---------------//
     // 1. 게시물목록 페이지 열기
-    @GetMapping("/list") // URL  : localhost:8080/board/list 요청시 해당 html 반환
-    public Resource getlist(){ return new ClassPathResource("templates/board/list.html"); }
-    // 2. 게시물쓰기 페이지 열기
-    @GetMapping("/write")// URL  : localhost:8080/board/write 요청시 해당 html 반환
-    public Resource getwrite(){ return new ClassPathResource("templates/board/write.html"); }
-    // 3. 게시물조회 페이지 열기
-    @GetMapping("/view")// URL  : localhost:8080/board/view 요청시 html 해당 html 반환
-    public Resource getview(){ return new ClassPathResource("templates/board/view.html"); }
-    // 4. 게시물수정 페이지 열기
-    @GetMapping("/update")// URL  : localhost:8080/board/update 요청시 해당 html 반환
-    public Resource getupdate(){ return new ClassPathResource("templates/board/update.html"); }
-    @GetMapping("/visit")
-    public Resource getvisit(){ return new ClassPathResource("templates/board/visit.html");}
+    // @GetMapping("/list") // URL  : localhost:8080/board/list 요청시 해당 html 반환
+    // public Resource getlist(){ return new ClassPathResource("templates/board/list.html"); }
+    // // 2. 게시물쓰기 페이지 열기
+    // @GetMapping("/write")// URL  : localhost:8080/board/write 요청시 해당 html 반환
+    // public Resource getwrite(){ return new ClassPathResource("templates/board/write.html"); }
+    // // 3. 게시물조회 페이지 열기
+    // @GetMapping("/view")// URL  : localhost:8080/board/view 요청시 html 해당 html 반환
+    // public Resource getview(){ return new ClassPathResource("templates/board/view.html"); }
+    // // 4. 게시물수정 페이지 열기
+    // @GetMapping("/update")// URL  : localhost:8080/board/update 요청시 해당 html 반환
+    // public Resource getupdate(){ return new ClassPathResource("templates/board/update.html"); }
+    // @GetMapping("/visit")
+    // public Resource getvisit(){ return new ClassPathResource("templates/board/visit.html");}
 
     // ----------- 3.요청과응답 처리 [model] --------------//
     // 1. HTTP 요청 메소드 매핑 : @PostMapping @GetMapping @DeleteMapping @PutMapping

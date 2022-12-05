@@ -4,14 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import Index from './component/Index'
-import Signup from './component/member/Signup'
+
 
 // 1. 사용할 컴포넌트 호출 [ import 컴포넌트명 from 파일명 ]
 import Library from './book/chapter3/Library'
 import Clock from './book/chapter4/Clock'
 import CommentList from './book/chapter5/CommentList'
-
+import NotificationList from './book/chapter6/NotificationList';
+import Home from './component/Home';
+import Index from './component/Index'
+import Signup from './component/member/Signup'
 // 2. Dom 컨테이너 [ public-> index.html 안에 있는 태그 ]
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // * 프로젝트
