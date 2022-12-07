@@ -1,7 +1,6 @@
 package com.Ezenweb.domain.dto;
 
 
-
 import com.Ezenweb.domain.entity.member.MemberEntity;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -80,8 +79,4 @@ public class MemberDto implements UserDetails , OAuth2User {
     public Map<String, Object> getAttributes() {   return this.attributes; }
 
 }
-
-
-
-
 

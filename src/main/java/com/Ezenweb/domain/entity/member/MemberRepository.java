@@ -1,3 +1,4 @@
+
 package com.Ezenweb.domain.entity.member;
 
 import org.springframework.data.jpa.repository.JpaRepository;

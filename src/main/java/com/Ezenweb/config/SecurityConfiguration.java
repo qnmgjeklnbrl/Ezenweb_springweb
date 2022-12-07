@@ -1,5 +1,6 @@
 package com.Ezenweb.config;
 
+
 import com.Ezenweb.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override // http 관련 시리큐티 재정의
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure( HttpSecurity http) throws Exception {
         http
                     .formLogin()                                        // 로그인 페이지 보안 설정
                         .loginPage("/member/login")                     // 아이디와 비밀번호를 입력받을 URL [ 로그인 페이지  ]
@@ -43,8 +44,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .csrf() // 요청 위조 방지
                         .ignoringAntMatchers("/member/getmember") // 로그인 post 사용  // 해당 URL 요청 방지 해지
                         .ignoringAntMatchers("/member/setmember") // 회원가입 post 사용
+                        .ignoringAntMatchers("/board/setbcategory") // 회원가입 post 사용
                 .and()
                     .oauth2Login() // 소셜 로그인 보안 설정
+                    .defaultSuccessUrl("/")// 소셜 로그인 성공시 이동하는 URL
                     .userInfoEndpoint()// Endpoint (종착점) : 소셜 회원정보를 들어오는곳
                     .userService( memberService );// 해당 서비스  loadUser 메소드 구현
     }

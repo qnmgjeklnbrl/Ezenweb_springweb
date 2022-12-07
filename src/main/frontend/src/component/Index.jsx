@@ -34,6 +34,7 @@ import BoardList from './board/BoardList';
                             <Route path='/member/signup' element={<Signup/>}/>
                             <Route path='/member/login' element={<Login/>}/>
                             <Route path='/board/list' element={<BoardList/>}/>
+                            <Route path='/board/write' element={<BoardWrite/>}/>
                         </Routes>
                         <Footer/>
                     </BrowserRouter>    

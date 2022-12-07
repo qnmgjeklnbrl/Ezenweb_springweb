@@ -30,6 +30,7 @@ public class MemberEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "memberEntity" ) // [ 1:n] PK 에 해당 어노테이션   mappedBy="fk필드명"
     @Builder.Default // 빌더 사용시 해당 필드의 초기값 설정
+    @ToString.Exclude
     private List<BoardEntity> boardEntityList = new ArrayList<>();
 
     @Column // 회원 등급

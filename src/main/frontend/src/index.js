@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import Counter from './book/chapter7/Ex1_Hook';
 
 
 // 1. 사용할 컴포넌트 호출 [ import 컴포넌트명 from 파일명 ]
@@ -19,7 +19,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 // * 프로젝트
     root.render(
       <React.StrictMode>
-        <Index />
+        < Index/>
       </React.StrictMode>
     );
 
