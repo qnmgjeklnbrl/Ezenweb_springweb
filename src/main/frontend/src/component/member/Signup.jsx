@@ -12,7 +12,7 @@ function Signup( props ){ // * 회원가입 컴포넌트 *
         }
 
         axios           // 3. axios 비동기통신 이용한 서버[spring] 통신
-            .post( "http://localhost:8082/member/setmember" ,  info )   // 요청메소드 ( rul , data )
+            .post( "/member/setmember" ,  info )   // 요청메소드 ( rul , data )
             .then( res => { // 응답
                 let result = res.data ;
                 if( result != 0 ){ // 회원가입 성공

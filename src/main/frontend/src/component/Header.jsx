@@ -19,10 +19,24 @@ export default function Header(){
                     <Link to="/" > <img className="logo" src={logo} /> </Link>
                 </div>
                 <ul className ="top_menu">
+                    {login == "" ?
+                        (
+                            <>
+                                <li> <Link to="/member/signup" > 회원가입   </Link> </li>
+                                <li> <Link to="/member/login" > 로그인     </Link> </li>
+                            </>
+                        )
+                        :
+                        (  
+                            <>
+                                 <li> <a href="/member/logout"> 로그아웃     </a> </li>
+                                 <li> <Link to="/booklist" > 리액트실습     </Link> </li>
+                            </>
+                        )
+                    }
                     <li> { login } </li>
-                    <li> <Link to="/member/signup" > 회원가입   </Link> </li>
-                    <li> <Link to="/member/login" > 로그인     </Link> </li>
-                    <li> <a href="/member/logout"> 로그아웃     </a> </li>
+                    
+                    
                     <li> <Link to="/board/list" > 자유게시판     </Link> </li>
                 </ul>
             </div>

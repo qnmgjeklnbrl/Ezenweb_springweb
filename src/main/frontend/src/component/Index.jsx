@@ -21,6 +21,14 @@ import {BrowserRouter, Routes , Route ,Link} from 'react-router-dom';
 import Signup from './member/Signup';
 import Login from './member/Login';
 import BoardList from './board/BoardList';
+import Library from '../book/chapter3/Library';
+import Clock from '../book/chapter4/Clock';
+import CommentList from '../book/chapter5/CommentList';
+import NotificationList from '../book/chapter6/NotificationList';
+import Accommodate from '../book/chapter7/Accomodate';
+import ConfirmButton2 from '../book/chapter8/Confirmbutton2';
+import LandingPage from '../book/chapter9/LandingPage';
+import BookList from '../book/BookList';
   export default function Index( props ){
   return  (
             <div>
@@ -34,7 +42,18 @@ import BoardList from './board/BoardList';
                             <Route path='/member/signup' element={<Signup/>}/>
                             <Route path='/member/login' element={<Login/>}/>
                             <Route path='/board/list' element={<BoardList/>}/>
-                            <Route path='/board/write' element={<BoardWrite/>}/>
+                            <Route path='/booklist' element={<BookList/>}/>
+                            <Route path='/booklist/chapter3' element={<Library/>}/>
+                            <Route path='/booklist/chapter4' element={<Clock/>}/>
+                            <Route path='/booklist/chapter5' element={<CommentList/>}/>
+                            <Route path='/booklist/chapter6' element={<NotificationList/>}/>
+                            <Route path='/booklist/chapter7' element={<Accommodate/>}/>
+                            <Route path='/booklist/chapter8' element={<ConfirmButton2/>}/>
+                            <Route path='/booklist/chapter9' element={<LandingPage/>}/>
+
+
+
+                           {/* <Route path='/board/write' element={<BoardWrite/>}/> */}
                         </Routes>
                         <Footer/>
                     </BrowserRouter>    

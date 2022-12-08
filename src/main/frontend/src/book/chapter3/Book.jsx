@@ -1,6 +1,6 @@
 import React  from "react";
 function Book(props){
-    fetch("http://localhost:8082/member/list")
+    fetch("/member/list")
         .then((response) => response.json())
         .then((data) => console.log(data));
     
