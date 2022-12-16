@@ -4,7 +4,7 @@ import React from 'react';
 export default function Footer(){
     return (
         <div>
-            <h3>푸터</h3>
+            <h3>푸터123</h3>
         </div>
     );
 }

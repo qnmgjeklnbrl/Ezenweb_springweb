@@ -33,7 +33,7 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-def frontendDir = "$projectDir/src/main/frontend"
+def frontendDir = "$projectDir/src/main/frontend" // 리액트 프로젝트 폴더 경로
 
 sourceSets {
     main {
@@ -73,3 +73,6 @@ task copyReactBuildFiles(type: Copy) {
     from "$frontendDir/build"
     into "$projectDir/src/main/resources/static"
 }
+
+
+

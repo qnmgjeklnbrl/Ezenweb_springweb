@@ -2,6 +2,7 @@ package com.Ezenweb.controller;
 
 import com.Ezenweb.domain.dto.BcategoryDto;
 import com.Ezenweb.domain.dto.BoardDto;
+import com.Ezenweb.domain.dto.PageDto;
 import com.Ezenweb.domain.dto.VcategoryDto;
 import com.Ezenweb.domain.dto.VisitDto;
 import com.Ezenweb.service.BoardService;
@@ -58,14 +59,9 @@ public class BoardController {
     }
     // 2. 게시물 목록 조회 [ 페이징,검색 ]
      // 2. 게시물 목록 조회 [ 페이징,검색 ]
-     @GetMapping("/boardlist")
-     public List<BoardDto> boardlist(
-             @RequestParam("bcno") int bcno ,        // 카테고리 번호
-             @RequestParam("page") int page ,        // 현재 페이지 번호
-             @RequestParam("key") String key ,       // 검색할 필드명
-             @RequestParam("keyword") String keyword // 검색할 필드내 검색할 데이터
-             ){
-         return boardService.boardlist( page , bcno , key , keyword  );
+     @PostMapping("/boardlist")
+     public PageDto boardlist(@RequestBody PageDto pageDto){
+         return boardService.boardlist( pageDto );
      }
     // 3. 게시물 개별 조회
     @GetMapping("/getboard")
@@ -90,7 +86,7 @@ public class BoardController {
 
 
 
-        return boardService.serbcategory(bcategoryDto);
+        return boardService.setbcategory(bcategoryDto);
 
     }
     //7.모든 카테고리 출력
